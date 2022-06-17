@@ -1,0 +1,131 @@
+<html>
+    <head>
+            <title>Admin Page</title>
+            <meta charset="UTF-8">
+            <!-- Angular Jssss-------------->
+            <script src="css\angular.min.js"></script>
+            <!--===============================================================================================-->	
+            <link href="gpjlogo.png" rel="shortcut icon" type="image/png">
+            <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="CSS\bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="CSS\util.css">
+            <link rel="stylesheet" type="text/css" href="CSS\main.css">
+           <!--===============================================================================================-->
+           <meta name="viewport" content="width=device-width, initial-scale=1">
+           
+           <style>
+                button{border:solid black 2px;
+                 background-color: #154360;
+                 border-radius:5px;
+                 color:white;}
+                table{
+                  width: 80%;
+                  
+                }
+                 td{
+                     padding:0 15px;
+                 }
+                 th{
+                     text-align: center;
+                     padding: 15px;
+                 }
+                 #hd{
+                     padding: 10px;
+                     text-align: center;
+                     font-size: 20px;
+                     background-color: #154360;
+                     color: #ffffff;
+                 }
+             </style>
+           
+    </head>
+    <body ng-app="myApp" ng-controller="myCtrl">
+            <div style="padding: 15px; ">
+                <div class="card shadow-lg p-2" style="background-color:#154360;margin-left: 0%;margin-right: 0%;border-bottom-right-radius: 0; border-bottom-left-radius: 0">
+                    <div class="row text-center" style="color: #ffffff">
+                        <div class="col-lg-3">
+                          <img src="gpjlogo.png" alt="Logo" width="70" height="70" align="middle" style="margin: 5px">
+                              <br><b>DTE Code :</b>5008
+                                <br><b>MSBTE Code :</b>0018/1567
+                        </div>
+                        <div class="col-lg-9 align-self-center justify-content-center" style="vertical-align: middle">
+                                  <h1> Government Polytechnic, Jalgaon</h1>
+                                  <p  style="color:#DCF1FF;">(An Institute of Government Of Maharashtra)<br>Since 1960</p>
+                        </div> 
+                    </div>
+                </div>
+            <div>
+            <div style="padding: 10px;" class="card shadow-lg p-2">
+                <div class="row text-center">
+                    <div class="col-lg-6" >
+                        <input style="background: #154360;color: #ffffff;border-radius: 3px;" class="btn form-control" type="button" value="Upload Question">
+                    </div>
+                    <div class="col-lg-6" >
+                        <input style="background: #154360;color: #ffffff;border-radius: 3px;" class="btn form-control" type="button" value="View Result">
+                    </div>
+                </div>
+            </div>
+            <!-- Student Result -->
+  <div id="table2" style="padding: 20px;  ">
+    <table border="1px"  style="padding: 10px;  box-shadow: 2px 4px 7px 5px #dcdcdc; overflow: hidden;margin: 1px 10%; border-radius: 5px; border-collapse: collapse;" >
+        <tr>
+            <th colspan="4" id="hd"><h3>Student Result</h3></th>
+        </tr>
+        <tr>
+            <th>Enrollment Number</td>
+            <th>Name</th>
+            <th>Out Off Marks</th>
+            <th>Obtain Marks</th>
+        </tr>
+            <tr ng-repeat="std in students">
+                <td>{{std.s_id}}</td>
+                <td>{{std.s_name}} </td>
+                <td>{{std.o_f_m}}</td>
+                <td>{{std.o_b_m}}</td>
+            </tr> 
+        <tr>
+            <th colspan="4" style="padding: 5% 40% 5% 40%;">
+                <div class="container-login100-form-btn" style="margin-bottom: 20px;">
+                <input type="button" class="login100-form-btn" onclick="resultprint()" value="Print">
+            </th>
+        </tr>
+    </table>
+</div>
+<table border="1px"  id="tab" >
+        <tr>
+            <th colspan="4" ><h3>Student Result</h3></th>
+        </tr>
+        <tr>
+            <th>Enrollment Number</td>
+            <th>Name</th>
+            <th>Out Off Marks</th>
+            <th>Obtain Marks</th>
+        </tr>
+        <tr ng-repeat="std in students">
+                <td>{{std.s_id}}</td>
+                <td>{{std.s_name}} </td>
+                <td>{{std.o_f_m}}</td>
+                <td>{{std.o_b_m}}</td>
+        </tr> 
+</table>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+    $http.get("AdminDisResult.php")
+        .then(function(response) {
+        $scope.students = response.data;
+        });
+        });
+
+        function resultprint(){
+            var pr= document.getElementById("tab");
+            var p=window.open("");
+            pr.style.display="block";
+            p.document.write(pr.outerHTML);
+            p.print();
+            p.close();
+            pr.style.display="none";
+        }
+</script>
+    </body>
+</html>
